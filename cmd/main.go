@@ -29,5 +29,8 @@ func main() {
 	reader := bufio.NewReader(inf)
 	writer := bufio.NewWriter(ouf)
 
-	utils.PutCodeIn(reader, utils.MessageToCode("kto prochital tot pedik"), writer)
+	err = utils.PutCodeIn(reader, utils.MessageToCode("kto prochital tot pedik"), writer)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
