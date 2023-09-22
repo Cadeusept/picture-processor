@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cadeusept/picture-processor/utils"
+	"github.com/cadeusept/picture-processor/coding"
+	"github.com/cadeusept/picture-processor/decoding"
 )
 
 func main() {
-	ip := "./images/"
-	op := "./images/"
+	ip := "./../images/"
+	op := "./../images/"
 
 	inf, err := os.Open(ip + "parrot.bmp")
 	if err != nil {
@@ -24,13 +25,32 @@ func main() {
 		fmt.Println("Unable to open file:", err)
 		return
 	}
-	defer ouf.Close()
 
 	reader := bufio.NewReader(inf)
 	writer := bufio.NewWriter(ouf)
 
-	err = utils.PutCodeIn(reader, utils.MessageToCode("kto prochital tot pedik"), writer)
+	err = coding.PutCodeIn(reader, coding.MessageToCode("kto pro4el beast"), writer)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
+
+	ouf.Close()
+
+	ouf, err = os.Open(op + "myparrot.bmp")
+	if err != nil {
+		fmt.Println("Unable to open file:", err)
+		return
+	}
+	defer ouf.Close()
+
+	reader = bufio.NewReader(ouf)
+
+	msg, err := decoding.PutCodeOut(reader)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("coded message: %v\n", msg)
 }
