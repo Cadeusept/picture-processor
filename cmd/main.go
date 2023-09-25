@@ -75,8 +75,8 @@ var rootCmd = cobra.Command{
 }
 
 func init() {
-	rootCmd.Flags().StringVarP(&ip, "ipath", "i", "./../images/parrot.bmp", "Change input path on provided")
-	rootCmd.Flags().StringVarP(&op, "opath", "o", "./../images/myparrot.bmp", "Change output path on provided")
+	rootCmd.Flags().StringVarP(&ip, "ipath", "i", "./images/parrot.bmp", "Change input path on provided")
+	rootCmd.Flags().StringVarP(&op, "opath", "o", "./images/myparrot.bmp", "Change output path on provided")
 	rootCmd.Flags().BoolVarP(&flagDecode, "decode", "d", false, "Change prog mode")
 }
 
