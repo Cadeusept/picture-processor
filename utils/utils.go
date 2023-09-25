@@ -33,19 +33,17 @@ func Write8Bytes(symbol rune, dest *[]byte) error {
 	return nil
 }
 
-func ChangeTwoBits(src *[]byte, dest *byte, i int) (int, error) {
+func ChangeTwoBits(src *[]byte, dest *byte, i int) error {
 	var res byte
-	var bitsNum int
 	dest_str := AddBitsTo8(strings.Split(strconv.FormatInt(int64(*dest), 2), ""))
 
 	dest_str[(len(dest_str)/2)-1] = fmt.Sprintf("%v", (*src)[i])
 	dest_str[len(dest_str)-1] = fmt.Sprintf("%v", (*src)[i+1])
-	bitsNum = 2
 
 	for i := 0; i < len(dest_str); i++ {
 		bit, err := strconv.Atoi(dest_str[i])
 		if err != nil {
-			return 0, err
+			return err
 		}
 
 		if bit == 1 {
@@ -54,5 +52,5 @@ func ChangeTwoBits(src *[]byte, dest *byte, i int) (int, error) {
 	}
 
 	*dest = res
-	return bitsNum, nil
+	return nil
 }

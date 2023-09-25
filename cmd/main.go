@@ -15,6 +15,7 @@ import (
 var ip string
 var op string
 var flagDecode bool
+var flagCode bool
 
 var rootCmd = cobra.Command{
 	Use:     "picture-processor",
@@ -23,7 +24,7 @@ var rootCmd = cobra.Command{
 	Long:    "You can process the pictures",
 	Args:    cobra.MinimumNArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		if !flagDecode {
+		if flagCode || !flagDecode {
 			if len(args) == 0 {
 				fmt.Println(fmt.Errorf("error: please, provide a message"))
 				return
@@ -75,9 +76,10 @@ var rootCmd = cobra.Command{
 }
 
 func init() {
-	rootCmd.Flags().StringVarP(&ip, "ipath", "i", "./images/parrot.bmp", "Change input path on provided")
-	rootCmd.Flags().StringVarP(&op, "opath", "o", "./images/myparrot.bmp", "Change output path on provided")
-	rootCmd.Flags().BoolVarP(&flagDecode, "decode", "d", false, "Change prog mode")
+	rootCmd.Flags().StringVarP(&ip, "source", "s", "./images/parrot.bmp", "Change input source path on provided")
+	rootCmd.Flags().StringVarP(&op, "output", "o", "./images/myparrot.bmp", "Change coded file output path on provided")
+	rootCmd.Flags().BoolVarP(&flagCode, "code", "c", false, "Code file")
+	rootCmd.Flags().BoolVarP(&flagDecode, "decode", "d", false, "Decode file")
 }
 
 func main() {

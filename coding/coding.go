@@ -53,11 +53,10 @@ func PutCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
 		}
 
 		if i < cl {
-			n, err := utils.ChangeTwoBits(code, &buf[0], i)
-			if err != nil {
+			if utils.ChangeTwoBits(code, &buf[0], i) != nil {
 				return fmt.Errorf("error changing last bit: %w", err)
 			}
-			i += n
+			i += 2
 		}
 
 		_, err = w.Write(buf)
