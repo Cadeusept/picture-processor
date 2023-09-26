@@ -5,17 +5,20 @@ import (
 	"math"
 	"strconv"
 	"strings"
+
+	"github.com/cadeusept/picture-processor/utils"
 )
 
+// earnBits earns middle and end bits of provided src byte
 func earnBits(src byte) (*[]byte, error) {
-	src_str := strings.Split(strconv.FormatInt(int64(src), 2), "")
+	srcStr := utils.AddBitsTo8(strings.Split(strconv.FormatInt(int64(src), 2), ""))
 
-	bit1, err := strconv.Atoi(src_str[len(src_str)/2-1])
+	bit1, err := strconv.Atoi(srcStr[len(srcStr)/2-1])
 	if err != nil {
 		return nil, err
 	}
 
-	bit2, err := strconv.Atoi(src_str[len(src_str)-1])
+	bit2, err := strconv.Atoi(srcStr[len(srcStr)-1])
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +26,8 @@ func earnBits(src byte) (*[]byte, error) {
 	return &[]byte{byte(bit1), byte(bit2)}, nil
 }
 
-func PutCodeOut(r *bufio.Reader) (string, error) {
+// GetBmpMsgOut gets message from .bmp picture
+func GetBmpMsgOut(r *bufio.Reader) (string, error) {
 	code := []byte{}
 	buf := make([]byte, 1)
 	nSlice := []byte{}
@@ -57,8 +61,6 @@ func PutCodeOut(r *bufio.Reader) (string, error) {
 		}
 	}
 
-	// fmt.Printf("found %d symbols\n", n)
-
 	for i := 0; i < n*8; i += 2 {
 		_, err := r.Read(buf)
 		if err != nil {
@@ -73,8 +75,6 @@ func PutCodeOut(r *bufio.Reader) (string, error) {
 		code = append(code, (*slc)...)
 
 	}
-
-	// fmt.Println(code, len(code), len(code)/8, len(code)%8)
 
 	var res string
 	var tmpRes int

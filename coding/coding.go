@@ -8,24 +8,26 @@ import (
 	"github.com/cadeusept/picture-processor/utils"
 )
 
+// MessageToCode generates code slice - bit representation of msg and its size
 func MessageToCode(msg string) *[]byte {
 	l := len(msg)
 
 	runes := []rune(msg)
 	code := []byte{}
 
-	utils.Write8Bytes(rune(l), &code)
+	utils.Write8Bits(rune(l), &code)
 
-	for i := 0; i < l; i += 1 {
-		utils.Write8Bytes(runes[i], &code)
+	for i := 0; i < l; i++ {
+		utils.Write8Bits(runes[i], &code)
 	}
 
 	return &code
 }
 
-func PutCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
-	buf_len := 1
-	buf := make([]byte, buf_len)
+// InsertBmpCodeIn inserts code inside .bmp picture
+func InsertBmpCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
+	bufLen := 1
+	buf := make([]byte, bufLen)
 	i := 0
 	cl := len(*code)
 	if true {
@@ -41,8 +43,6 @@ func PutCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
 		}
 	}
 
-	// fmt.Println(*code, len(*code), len(*code)/8, len(*code)%8)
-
 	for {
 		_, err := r.Read(buf)
 		if err != nil {
@@ -53,11 +53,10 @@ func PutCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
 		}
 
 		if i < cl {
-			n, err := utils.ChangeTwoBits(code, &buf[0], i)
-			if err != nil {
+			if utils.ChangeTwoBits(code, &buf[0], i) != nil {
 				return fmt.Errorf("error changing last bit: %w", err)
 			}
-			i += n
+			i += 2
 		}
 
 		_, err = w.Write(buf)

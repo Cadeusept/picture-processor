@@ -7,16 +7,22 @@ import (
 	"strings"
 )
 
-func Write8Bytes(symbol rune, dest *[]byte) error {
-	src := strings.Split(strconv.FormatInt(int64(symbol), 2), "")
-	if len(src) < 8 {
+// AddBitsTo8 adds missing zeroes up to 8 elements
+func AddBitsTo8(str []string) []string {
+	if len(str) < 8 {
 		res := []string{}
-		for i := 0; i < 8-len(src); i++ {
+		for i := 0; i < 8-len(str); i++ {
 			res = append(res, "0")
 		}
-		res = append(res, src...)
-		src = res
+		res = append(res, str...)
+		str = res
 	}
+	return str
+}
+
+// Write8Bits appends symbol in bit representation to dest
+func Write8Bits(symbol rune, dest *[]byte) error {
+	src := AddBitsTo8(strings.Split(strconv.FormatInt(int64(symbol), 2), ""))
 
 	for _, v := range src {
 		i, err := strconv.Atoi(v)
@@ -29,27 +35,18 @@ func Write8Bytes(symbol rune, dest *[]byte) error {
 	return nil
 }
 
-func ChangeTwoBits(src *[]byte, dest *byte, i int) (int, error) {
+// ChangeTwoBits replaces middle and end bits in dest with values from src on positions i and i+1
+func ChangeTwoBits(src *[]byte, dest *byte, i int) error {
 	var res byte
-	var bitsNum int
-	dest_str := strings.Split(strconv.FormatInt(int64(*dest), 2), "")
-	for len(dest_str) != 8 {
-		dest_str = append([]string{"0"}, dest_str...)
-	}
+	destStr := AddBitsTo8(strings.Split(strconv.FormatInt(int64(*dest), 2), ""))
 
-	// if len(*src) > i+2 {
-	dest_str[(len(dest_str)/2)-1] = fmt.Sprintf("%v", (*src)[i])
-	dest_str[len(dest_str)-1] = fmt.Sprintf("%v", (*src)[i+1])
-	bitsNum = 2
-	// } else {
-	// 	dest_str[(len(dest_str)/2)-1] = fmt.Sprintf("%v", (*src)[i])
-	// 	bitsNum = 1
-	// }
+	destStr[(len(destStr)/2)-1] = fmt.Sprintf("%v", (*src)[i])
+	destStr[len(destStr)-1] = fmt.Sprintf("%v", (*src)[i+1])
 
-	for i := 0; i < len(dest_str); i++ {
-		bit, err := strconv.Atoi(dest_str[i])
+	for i := 0; i < len(destStr); i++ {
+		bit, err := strconv.Atoi(destStr[i])
 		if err != nil {
-			return 0, err
+			return err
 		}
 
 		if bit == 1 {
@@ -58,5 +55,5 @@ func ChangeTwoBits(src *[]byte, dest *byte, i int) (int, error) {
 	}
 
 	*dest = res
-	return bitsNum, nil
+	return nil
 }
