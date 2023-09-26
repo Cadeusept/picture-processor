@@ -17,6 +17,17 @@ func TestMessageToCode(t *testing.T) {
 		0, 1, 1, 0, 0, 0, 0, 1}, *MessageToCode("Aa"))
 }
 
+/* TODO
 func TestPutCodeIn(t *testing.T) {
-	//r := bufio.NewReader(rd io.Reader)
+	buf := []byte{0, 10, 20, 26}
+	code := []byte{1, 2}
+	mr := mocks.MockReader{Buf: buf}
+	mw := mocks.MockWriter{Buf: []byte{}}
+	r := bufio.NewReader(&mr)
+	w := bufio.NewWriter(&mw)
+
+	require.NoError(t, PutCodeIn(r, &code, w))
+
+	assert.Equal(t, []byte{1, 26, 20}, mw.Buf)
 }
+*/
