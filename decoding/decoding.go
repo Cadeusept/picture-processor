@@ -9,7 +9,7 @@ import (
 	"github.com/cadeusept/picture-processor/utils"
 )
 
-// Earns middle and end bits of provided src byte
+// earnBits earns middle and end bits of provided src byte
 func earnBits(src byte) (*[]byte, error) {
 	srcStr := utils.AddBitsTo8(strings.Split(strconv.FormatInt(int64(src), 2), ""))
 
@@ -26,7 +26,7 @@ func earnBits(src byte) (*[]byte, error) {
 	return &[]byte{byte(bit1), byte(bit2)}, nil
 }
 
-// Gets message from .bmp picture
+// GetBmpMsgOut gets message from .bmp picture
 func GetBmpMsgOut(r *bufio.Reader) (string, error) {
 	code := []byte{}
 	buf := make([]byte, 1)
