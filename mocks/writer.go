@@ -2,6 +2,7 @@ package mocks
 
 import "fmt"
 
+// MockWriter is mock io.Writer
 type MockWriter struct {
 	Buf []byte
 }

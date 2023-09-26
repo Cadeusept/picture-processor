@@ -2,6 +2,7 @@ package mocks
 
 import "io"
 
+// MockReader is mock io.Reader
 type MockReader struct {
 	Buf []byte
 }

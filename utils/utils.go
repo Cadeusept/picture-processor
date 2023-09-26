@@ -38,13 +38,13 @@ func Write8Bits(symbol rune, dest *[]byte) error {
 // ChangeTwoBits replaces middle and end bits in dest with values from src on positions i and i+1
 func ChangeTwoBits(src *[]byte, dest *byte, i int) error {
 	var res byte
-	dest_str := AddBitsTo8(strings.Split(strconv.FormatInt(int64(*dest), 2), ""))
+	destStr := AddBitsTo8(strings.Split(strconv.FormatInt(int64(*dest), 2), ""))
 
-	dest_str[(len(dest_str)/2)-1] = fmt.Sprintf("%v", (*src)[i])
-	dest_str[len(dest_str)-1] = fmt.Sprintf("%v", (*src)[i+1])
+	destStr[(len(destStr)/2)-1] = fmt.Sprintf("%v", (*src)[i])
+	destStr[len(destStr)-1] = fmt.Sprintf("%v", (*src)[i+1])
 
-	for i := 0; i < len(dest_str); i++ {
-		bit, err := strconv.Atoi(dest_str[i])
+	for i := 0; i < len(destStr); i++ {
+		bit, err := strconv.Atoi(destStr[i])
 		if err != nil {
 			return err
 		}
