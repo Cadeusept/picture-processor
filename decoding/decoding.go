@@ -9,15 +9,16 @@ import (
 	"github.com/cadeusept/picture-processor/utils"
 )
 
+// Earns middle and end bits of provided src byte
 func earnBits(src byte) (*[]byte, error) {
-	src_str := utils.AddBitsTo8(strings.Split(strconv.FormatInt(int64(src), 2), ""))
+	srcStr := utils.AddBitsTo8(strings.Split(strconv.FormatInt(int64(src), 2), ""))
 
-	bit1, err := strconv.Atoi(src_str[len(src_str)/2-1])
+	bit1, err := strconv.Atoi(srcStr[len(srcStr)/2-1])
 	if err != nil {
 		return nil, err
 	}
 
-	bit2, err := strconv.Atoi(src_str[len(src_str)-1])
+	bit2, err := strconv.Atoi(srcStr[len(srcStr)-1])
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +26,8 @@ func earnBits(src byte) (*[]byte, error) {
 	return &[]byte{byte(bit1), byte(bit2)}, nil
 }
 
-func PutBmpCodeOut(r *bufio.Reader) (string, error) {
+// Gets message from .bmp picture
+func GetBmpMsgOut(r *bufio.Reader) (string, error) {
 	code := []byte{}
 	buf := make([]byte, 1)
 	nSlice := []byte{}

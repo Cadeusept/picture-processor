@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Add missing zeroes up to 8 elements
 func AddBitsTo8(str []string) []string {
 	if len(str) < 8 {
 		res := []string{}
@@ -19,7 +20,8 @@ func AddBitsTo8(str []string) []string {
 	return str
 }
 
-func Write8Bytes(symbol rune, dest *[]byte) error {
+// Append symbol in bit representation to dest
+func Write8Bits(symbol rune, dest *[]byte) error {
 	src := AddBitsTo8(strings.Split(strconv.FormatInt(int64(symbol), 2), ""))
 
 	for _, v := range src {
@@ -33,6 +35,7 @@ func Write8Bytes(symbol rune, dest *[]byte) error {
 	return nil
 }
 
+// Replaces middle and end bits in dest with values from src on positions i and i+1
 func ChangeTwoBits(src *[]byte, dest *byte, i int) error {
 	var res byte
 	dest_str := AddBitsTo8(strings.Split(strconv.FormatInt(int64(*dest), 2), ""))

@@ -18,10 +18,10 @@ func TestAddBitsTo8(t *testing.T) {
 func TestWrite8Bytes(t *testing.T) {
 	dest := []byte{}
 
-	require.NoError(t, Write8Bytes('a', &dest))
+	require.NoError(t, Write8Bits('a', &dest))
 	assert.Equal(t, []byte{0, 1, 1, 0, 0, 0, 0, 1}, dest)
 
-	require.NoError(t, Write8Bytes('A', &dest))
+	require.NoError(t, Write8Bits('A', &dest))
 	assert.Equal(t, []byte{
 		0, 1, 1, 0, 0, 0, 0, 1,
 		0, 1, 0, 0, 0, 0, 0, 1}, dest)

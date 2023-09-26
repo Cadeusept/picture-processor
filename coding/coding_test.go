@@ -18,7 +18,7 @@ func TestMessageToCode(t *testing.T) {
 }
 
 /*
-func TestPutCodeIn(t *testing.T) {
+func TestInsertCodeIn(t *testing.T) {
 	buf := []byte{
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

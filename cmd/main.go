@@ -55,7 +55,7 @@ var rootCmd = cobra.Command{
 			ext := filepath.Ext(ip)
 			switch ext {
 			case ".bmp":
-				err = coding.PutBmpCodeIn(reader, coding.MessageToCode(args[0]), writer)
+				err = coding.InsertBmpCodeIn(reader, coding.MessageToCode(args[0]), writer)
 				if err != nil {
 					fmt.Println(err)
 					return
@@ -79,7 +79,7 @@ var rootCmd = cobra.Command{
 			ext := filepath.Ext(ip)
 			switch ext {
 			case ".bmp":
-				msg, err = decoding.PutBmpCodeOut(reader)
+				msg, err = decoding.GetBmpMsgOut(reader)
 				if err != nil {
 					fmt.Println(err)
 					return

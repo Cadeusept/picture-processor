@@ -8,24 +8,26 @@ import (
 	"github.com/cadeusept/picture-processor/utils"
 )
 
+// Generates code slice - bit representation of msg and its size
 func MessageToCode(msg string) *[]byte {
 	l := len(msg)
 
 	runes := []rune(msg)
 	code := []byte{}
 
-	utils.Write8Bytes(rune(l), &code)
+	utils.Write8Bits(rune(l), &code)
 
-	for i := 0; i < l; i += 1 {
-		utils.Write8Bytes(runes[i], &code)
+	for i := 0; i < l; i++ {
+		utils.Write8Bits(runes[i], &code)
 	}
 
 	return &code
 }
 
-func PutBmpCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
-	buf_len := 1
-	buf := make([]byte, buf_len)
+// Inserts code inside .bmp picture
+func InsertBmpCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
+	bufLen := 1
+	buf := make([]byte, bufLen)
 	i := 0
 	cl := len(*code)
 	if true {
@@ -40,8 +42,6 @@ func PutBmpCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
 			return err
 		}
 	}
-
-	// fmt.Println(*code, len(*code), len(*code)/8, len(*code)%8)
 
 	for {
 		_, err := r.Read(buf)
