@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/cadeusept/picture-processor/coding"
 	"github.com/cadeusept/picture-processor/decoding"
@@ -30,6 +31,10 @@ var rootCmd = cobra.Command{
 				return
 			}
 
+			if filepath.Ext(ip) != filepath.Ext(op) {
+				fmt.Println(fmt.Errorf("error: input and output extentions should be the same"))
+			}
+
 			inf, err := os.Open(ip)
 			if err != nil {
 				fmt.Println("Unable to open file:", err)
@@ -47,12 +52,18 @@ var rootCmd = cobra.Command{
 			reader := bufio.NewReader(inf)
 			writer := bufio.NewWriter(ouf)
 
-			err = coding.PutCodeIn(reader, coding.MessageToCode(args[0]), writer)
-			if err != nil {
-				fmt.Println(err)
+			ext := filepath.Ext(ip)
+			switch ext {
+			case ".bmp":
+				err = coding.PutBmpCodeIn(reader, coding.MessageToCode(args[0]), writer)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+			default:
+				fmt.Println(fmt.Errorf("error: extension %s not supported", ext))
 				return
 			}
-
 			fmt.Printf("message coded successfully into file: %s\n", op)
 		} else {
 			ipf, err := os.Open(ip)
@@ -64,9 +75,17 @@ var rootCmd = cobra.Command{
 
 			reader := bufio.NewReader(ipf)
 
-			msg, err := decoding.PutCodeOut(reader)
-			if err != nil {
-				fmt.Println(err)
+			var msg string
+			ext := filepath.Ext(ip)
+			switch ext {
+			case ".bmp":
+				msg, err = decoding.PutBmpCodeOut(reader)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+			default:
+				fmt.Println(fmt.Errorf("error: extension %s not supported", ext))
 				return
 			}
 

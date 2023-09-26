@@ -23,7 +23,7 @@ func MessageToCode(msg string) *[]byte {
 	return &code
 }
 
-func PutCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
+func PutBmpCodeIn(r *bufio.Reader, code *[]byte, w *bufio.Writer) error {
 	buf_len := 1
 	buf := make([]byte, buf_len)
 	i := 0

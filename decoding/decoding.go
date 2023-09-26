@@ -25,7 +25,7 @@ func earnBits(src byte) (*[]byte, error) {
 	return &[]byte{byte(bit1), byte(bit2)}, nil
 }
 
-func PutCodeOut(r *bufio.Reader) (string, error) {
+func PutBmpCodeOut(r *bufio.Reader) (string, error) {
 	code := []byte{}
 	buf := make([]byte, 1)
 	nSlice := []byte{}
