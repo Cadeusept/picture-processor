@@ -2,7 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"math"
 	"strconv"
 	"strings"
 )
@@ -50,7 +49,7 @@ func ChangeTwoBits(src *[]byte, dest *byte, i int) error {
 		}
 
 		if bit == 1 {
-			res += byte(math.Pow(2, float64(7-i%8)))
+			res += 1 << (7 - i%8)
 		}
 	}
 
