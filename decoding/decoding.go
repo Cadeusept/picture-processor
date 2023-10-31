@@ -81,7 +81,7 @@ func GetBmpMsgOut(r *bufio.Reader) (string, error) {
 	j := 0
 	for i, v := range code {
 		if v == 1 {
-			tmpRes += int(math.Pow(2, float64(7-(i%8))))
+			tmpRes += 1 << (7 - i%8)
 		}
 		j++
 		if j == 8 {
